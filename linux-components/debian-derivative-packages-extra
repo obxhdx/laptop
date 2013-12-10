@@ -1,0 +1,14 @@
+fancy_echo "Installing Postgres, a good open source relational database ..."
+  sudo aptitude install -y postgresql postgresql-server-dev-all
+
+fancy_echo "Installing Redis, a good key-value database ..."
+  sudo aptitude install -y redis-server
+
+fancy_echo "Installing tmux, to save project state and switch between projects ..."
+  sudo aptitude install -y tmux
+
+fancy_echo "Installing ImageMagick, to crop and resize images ..."
+  sudo aptitude install -y imagemagick
+
+fancy_echo "Installing watch, to execute a program periodically and show the output ..."
+  sudo aptitude install -y watch

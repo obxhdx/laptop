@@ -13,7 +13,3 @@ fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
 
 fancy_echo "Installing Rails ..."
   gem install rails --no-document
-
-fancy_echo "Installing GitHub CLI client ..."
-  curl http://hub.github.com/standalone -sLo ~/.bin/hub
-  chmod +x ~/.bin/hub
