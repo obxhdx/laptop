@@ -14,3 +14,4 @@ linux-components/heroku
 linux-components/fasd
 linux-components/elementary-os
 common-components/prezto
+common-components/vim

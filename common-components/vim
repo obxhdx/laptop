@@ -1,0 +1,5 @@
+fancy_echo "Installing Prezto, the configuration framework for Zsh ..."
+  cd
+  git clone --recursive git://github.com/obxhdx/prezto.git
+  cd prezto
+  rake
