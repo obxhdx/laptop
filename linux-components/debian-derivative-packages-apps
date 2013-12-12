@@ -1,0 +1,47 @@
+fancy_echo "Installing Brasero, for CD/DVD burning ..."
+  sudo aptitude install -y brasero
+
+fancy_echo "Installing Chromium web browser ..."
+  sudo aptitude install -y chromium-browser
+
+fancy_echo "Installing dconf-editor, for system configuration ..."
+  sudo aptitude install -y dconf-editor
+
+fancy_echo "Installing Easytag, for viewing, editing and writing ID3 tags ..."
+  sudo aptitude install -y easytag
+
+fancy_echo "Installing Firefox web browser ..."
+  sudo aptitude install -y firefox
+
+fancy_echo "Installing Gimp Image Editor ..."
+  sudo aptitude install -y gimp
+
+fancy_echo "Installing Redshift, to adjust the screen color temperature ..."
+  sudo aptitude install -y gtk-redshift
+
+fancy_echo "Installing Libreoffice ..."
+  sudo aptitude install -y libreoffice
+
+fancy_echo "Installing Picard, the MusicBrainz audio files tagger ..."
+  sudo aptitude install -y picard
+
+fancy_echo "Installing Transmission BitTorrent client ..."
+  sudo aptitude install -y transmission
+
+fancy_echo "Installing Clementine music player..."
+  sudo aptitude install -y clementine
+
+fancy_echo "Installing Subdownloader subtitles downloader ..."
+  sudo aptitude install -y subdownloader
+
+fancy_echo "Installing Comix comic viewer ..."
+  sudo aptitude install -y comix
+
+fancy_echo "Installing ComicTagger comic metadata editor ..."
+  sudo pip install comictagger beautifulsoup4 configparser
+
+fancy_echo "Installing Skype ..."
+  sudo aptitude install -y skype
+
+fancy_echo "Installing Dropbox ..."
+  sudo aptitude install -y dropbox
