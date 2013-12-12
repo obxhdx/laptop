@@ -6,3 +6,6 @@ fancy_echo "Installing vim from Homebrew to get the latest version ..."
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
   brew install ctags
+
+fancy_echo "Installing Fasd for quick access to files and directories (inspired by autojump, z and v) ..."
+  brew install fasd

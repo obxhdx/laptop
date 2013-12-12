@@ -1,0 +1,6 @@
+fancy_echo "Installing Fasd for quick access to files and directories (inspired by autojump, z and v) ..."
+  git clone git://github.com/clvv/fasd.git /tmp/fasd
+  cd /tmp/fasd
+  sudo make install
+  cd
+  rm -rf /tmp/fasd
