@@ -12,3 +12,12 @@ fancy_echo "Installing ctags, to index files for vim tab completion of methods, 
 
 fancy_echo "Installing vim ..."
   sudo aptitude install -y vim-gtk
+
+fancy_echo "Installing icedtea-7-plugin, to execute Java applets ..."
+  sudo aptitude install -y icedtea-7-plugin
+
+fancy_echo "Installing unrar-free, the .rar files unarchiver ..."
+  sudo aptitude install -y unrar-free
+
+fancy_echo "Installing flashplugin-installer, the Adobe Flash Player plugin installer ..."
+  sudo aptitude install -y flashplugin-installer
