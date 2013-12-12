@@ -1,0 +1,5 @@
+fancy_echo "Configuring Vim ..."
+  cd
+  git clone git://github.com/obxhdx/vimfiles.git
+  cd vimfiles
+  rake
