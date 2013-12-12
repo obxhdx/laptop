@@ -1,0 +1,59 @@
+fancy_echo "Installing Elementary Tweaks ..."
+  sudo add-apt-repository -y ppa:versable/elementary-update
+  sudo aptitude update
+  sudo aptitude install elementary-tweaks
+
+fancy_echo "Installing Sypapse indicator ..."
+  sudo aptitude install indicator-synapse
+
+fancy_echo "Disabling Files single click ..."
+  gsettings set org.pantheon.files.preferences single-click true
+
+fancy_echo "Enabling Slingshot categories ..."
+  gsettings set org.pantheon.desktop.slingshot use-category true
+
+fancy_echo "Enabling 24 hour clock ..."
+  gsettings set com.canonical.indicator.datetime time-format 24-hour
+
+fancy_echo "Enabling day of the week in clock ..."
+  gsettings set com.canonical.indicator.datetime show-day true
+
+fancy_echo "Changing arrangement of buttons on the titlebar ..."
+  gsettings set org.pantheon.desktop.gala.appearance button-layout 'close,minimize:maximize'
+
+fancy_echo "Setting parent windows to dim when showing modal windows ..."
+  gsettings set org.pantheon.desktop.gala.appearance dim-parents true
+
+fancy_echo "Removing Plank default icon ..."
+  rm -rf ~/.config/plank/dock1/launchers/plank.dockitem
+
+fancy_echo "Setting Plank transparent theme ..."
+  sed -i 's/Theme=\w*/Theme=Transparent/g' ~/.config/plank/dock1/settings
+
+fancy_echo "Adjusting default screen brightness ..."
+  sudo sed -i '$d' /etc/rc.local
+  echo "echo 5 > /sys/class/backlight/acpi_video0/brightness\nexit 0" | sudo tee -a /etc/rc.local
+
+fancy_echo "Adding Redshift to startup applications ..."
+  cp /usr/share/applications/gtk-redshift.desktop ~/.config/autostart
+
+fancy_echo "Configuring NTFS backup partition to auto-mount ..."
+  sudo aptitude install -y ntfs-3g
+  uuid=`sudo blkid /dev/sda8 | awk -F'"' '{print $4}'`
+  echo "# NTFS auto-mount\nUUID=$uuid /media/Backup ntfs-3g auto,defaults,uid=1000 0 0" | sudo tee -a /etc/fstab
+
+fancy_echo "Turning off bluetooth ..."
+  sudo sed -i 's/InitiallyPowered = \w\+/InitiallyPowered = false/g' /etc/bluetooth/main.conf
+  sudo sed -i 's/RememberPowered = \w\+/RememberPowered = false/g' /etc/bluetooth/main.conf
+
+fancy_echo "Setting Ubuntu Mono as monospace font ..."
+  sudo aptitude install ttf-ubuntu-font-family
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Ubuntu Mono 11'
+
+fancy_echo "Tweaking terminal ..."
+  gsettings set org.pantheon.terminal.settings allow-bold false
+  gsettings set org.pantheon.terminal.settings follow-last-table false
+  gsettings set org.pantheon.terminal.settings opacity 95
+  gsettings set org.pantheon.terminal.settings palette '#000000:#e52222:#a6e32d:#fc951e:#c48dff:#fa2573:#67d9f0:#f2f2f2:#000000:#e52222:#a6e32d:#fc951e:#c48dff:#fa2573:#67d9f0:#f2f2f'
+  gsettings set org.pantheon.terminal.settings remember-tabs false
+  gsettings set org.pantheon.terminal.settings shell '/usr/bin/zsh'

@@ -12,3 +12,4 @@ common-components/ruby-environment
 linux-components/bundler
 linux-components/heroku
 linux-components/fasd
+linux-components/elementary-os
