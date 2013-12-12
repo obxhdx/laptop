@@ -1,11 +1,3 @@
-fancy_echo "Installing Elementary Tweaks ..."
-  sudo add-apt-repository -y ppa:versable/elementary-update
-  sudo aptitude update
-  sudo aptitude install elementary-tweaks
-
-fancy_echo "Installing Sypapse indicator ..."
-  sudo aptitude install indicator-synapse
-
 fancy_echo "Disabling Files single click ..."
   gsettings set org.pantheon.files.preferences single-click true
 
@@ -57,3 +49,13 @@ fancy_echo "Tweaking terminal ..."
   gsettings set org.pantheon.terminal.settings palette '#000000:#e52222:#a6e32d:#fc951e:#c48dff:#fa2573:#67d9f0:#f2f2f2:#000000:#e52222:#a6e32d:#fc951e:#c48dff:#fa2573:#67d9f0:#f2f2f'
   gsettings set org.pantheon.terminal.settings remember-tabs false
   gsettings set org.pantheon.terminal.settings shell '/usr/bin/zsh'
+
+fancy_echo "Enabling Elementary Update PPA ..."
+  sudo add-apt-repository -y ppa:versable/elementary-update
+  sudo aptitude update
+
+fancy_echo "Installing Elementary Tweaks ..."
+  sudo aptitude install elementary-tweaks
+
+fancy_echo "Installing Sypapse indicator ..."
+  sudo aptitude install indicator-synapse

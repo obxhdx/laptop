@@ -1,3 +1,7 @@
+fancy_echo "Enabling Canonical partners repository ..."
+  sudo add-apt-repository "deb http://archive.canonical.com/ubuntu precise partner"
+  sudo aptitude update
+
 fancy_echo "Installing Brasero, for CD/DVD burning ..."
   sudo aptitude install -y brasero
 

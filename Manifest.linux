@@ -12,6 +12,7 @@ common-components/ruby-environment
 linux-components/bundler
 linux-components/heroku
 linux-components/fasd
-linux-components/elementary-os
 common-components/prezto
 common-components/vim
+linux-components/elementary-os
+linux-components/debian-package-apps
