@@ -1,0 +1,261 @@
+#!/usr/bin/env zsh
+### end common-components/zsh-shebang
+
+# Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
+# desktop, no haters here) into an awesome development machine.
+
+# This file is auto-generated. Do not edit it by hand unless you know what
+# you're doing. Please see 'CONTRIBUTING.md' for more information.
+### end common-components/header
+
+trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+
+set -e
+### end common-components/exit-trap
+
+fancy_echo() {
+  printf "\n%b\n" "$1"
+}
+### end common-components/shared-functions
+
+if ! grep -qiE 'precise|quantal|wheezy|raring|jessie|saucy|luna' /etc/os-release
+then
+  fancy_echo "Sorry! we don't currently support that distro."
+  exit 1
+fi
+### end linux-components/distro-check
+
+fancy_echo "Updating system packages ..."
+  if command -v aptitude >/dev/null; then
+    fancy_echo "Using aptitude ..."
+  else
+    fancy_echo "Installing aptitude ..."
+    sudo apt-get install -y aptitude
+  fi
+  sudo aptitude update
+### end linux-components/debian-package-update
+
+fancy_echo "Installing git, for source control management ..."
+  sudo aptitude install -y git
+
+fancy_echo "Installing base ruby build dependencies ..."
+  sudo aptitude build-dep -y ruby1.9.3
+
+fancy_echo "Installing libraries for common gem dependencies ..."
+  sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
+
+fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
+  sudo aptitude install -y exuberant-ctags
+
+fancy_echo "Installing vim ..."
+  sudo aptitude install -y vim-gtk
+
+fancy_echo "Installing icedtea-7-plugin, to execute Java applets ..."
+  sudo aptitude install -y icedtea-7-plugin
+
+fancy_echo "Installing unrar-free, the .rar files unarchiver ..."
+  sudo aptitude install -y unrar-free
+
+fancy_echo "Installing flashplugin-installer, the Adobe Flash Player plugin installer ..."
+  sudo aptitude install -y flashplugin-installer
+### end linux-components/debian-derivative-packages
+
+fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
+  git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
+  sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+  sh /tmp/the_silver_searcher/build.sh
+  cd /tmp/the_silver_searcher
+  sh build.sh
+  sudo make install
+  cd
+  rm -rf /tmp/the_silver_searcher
+### end linux-components/silver-searcher-from-source
+
+fancy_echo "Installing rbenv, to change Ruby versions ..."
+  git clone git://github.com/sstephenson/rbenv.git ~/.rbenv
+
+  if ! grep -qs "rbenv init" ~/.zshrc; then
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc
+
+    echo 'eval "$(rbenv init - --no-rehash)"' >> ~/.zshrc
+  fi
+
+  source ~/.zshrc
+
+fancy_echo "Installing rbenv-gem-rehash so the shell automatically picks up binaries after installing gems with binaries..."
+  git clone https://github.com/sstephenson/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
+
+fancy_echo "Installing ruby-build, to install Rubies ..."
+  git clone git://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+### end linux-components/rbenv
+
+fancy_echo "Installing Ruby 2.0.0-p353 ..."
+  rbenv install 2.0.0-p353
+
+fancy_echo "Setting Ruby 2.0.0-p353 as global default Ruby ..."
+  rbenv global 2.0.0-p353
+  rbenv rehash
+
+fancy_echo "Updating to latest Rubygems version ..."
+  gem update --system
+
+fancy_echo "Installing Bundler to install project-specific Ruby gems ..."
+  gem install bundler --no-document --pre
+
+fancy_echo "Installing Rails ..."
+  gem install rails --no-document
+### end common-components/ruby-environment
+
+fancy_echo "Configuring Bundler for faster, parallel gem installation ..."
+  number_of_cores=`nproc`
+  bundle config --global jobs `expr $number_of_cores - 1`
+### end linux-components/bundler
+
+fancy_echo "Installing Heroku CLI client ..."
+  wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+fancy_echo "Installing the heroku-config plugin to pull config variables locally to be used as ENV variables ..."
+  heroku plugins:install git://github.com/ddollar/heroku-config.git
+### end linux-components/heroku
+
+fancy_echo "Installing Fasd for quick access to files and directories (inspired by autojump, z and v) ..."
+  git clone git://github.com/clvv/fasd.git /tmp/fasd
+  cd /tmp/fasd
+  sudo make install
+  cd
+  rm -rf /tmp/fasd
+### end linux-components/fasd
+
+fancy_echo "Configuring Vim ..."
+  cd
+  git clone git://github.com/obxhdx/vimfiles.git
+  cd vimfiles
+  rake
+### end common-components/prezto
+
+fancy_echo "Installing Prezto, the configuration framework for Zsh ..."
+  cd
+  git clone --recursive git://github.com/obxhdx/prezto.git
+  cd prezto
+  rake
+### end common-components/vim
+
+fancy_echo "Disabling Files single click ..."
+  gsettings set org.pantheon.files.preferences single-click true
+
+fancy_echo "Enabling Slingshot categories ..."
+  gsettings set org.pantheon.desktop.slingshot use-category true
+
+fancy_echo "Enabling 24 hour clock ..."
+  gsettings set com.canonical.indicator.datetime time-format 24-hour
+
+fancy_echo "Enabling day of the week in clock ..."
+  gsettings set com.canonical.indicator.datetime show-day true
+
+fancy_echo "Changing arrangement of buttons on the titlebar ..."
+  gsettings set org.pantheon.desktop.gala.appearance button-layout 'close,minimize:maximize'
+
+fancy_echo "Setting parent windows to dim when showing modal windows ..."
+  gsettings set org.pantheon.desktop.gala.appearance dim-parents true
+
+fancy_echo "Removing Plank default icon ..."
+  rm -rf ~/.config/plank/dock1/launchers/plank.dockitem
+
+fancy_echo "Setting Plank transparent theme ..."
+  sed -i 's/Theme=\w*/Theme=Transparent/g' ~/.config/plank/dock1/settings
+
+fancy_echo "Adjusting default screen brightness ..."
+  sudo sed -i '$d' /etc/rc.local
+  echo "echo 5 > /sys/class/backlight/acpi_video0/brightness\nexit 0" | sudo tee -a /etc/rc.local
+
+fancy_echo "Adding Redshift to startup applications ..."
+  cp /usr/share/applications/gtk-redshift.desktop ~/.config/autostart
+
+fancy_echo "Configuring NTFS backup partition to auto-mount ..."
+  sudo aptitude install -y ntfs-3g
+  uuid=`sudo blkid /dev/sda8 | awk -F'"' '{print $4}'`
+  echo "# NTFS auto-mount\nUUID=$uuid /media/Backup ntfs-3g auto,defaults,uid=1000 0 0" | sudo tee -a /etc/fstab
+
+fancy_echo "Turning off bluetooth ..."
+  sudo sed -i 's/InitiallyPowered = \w\+/InitiallyPowered = false/g' /etc/bluetooth/main.conf
+  sudo sed -i 's/RememberPowered = \w\+/RememberPowered = false/g' /etc/bluetooth/main.conf
+
+fancy_echo "Setting Ubuntu Mono as monospace font ..."
+  sudo aptitude install ttf-ubuntu-font-family
+  gsettings set org.gnome.desktop.interface monospace-font-name 'Ubuntu Mono 11'
+
+fancy_echo "Tweaking terminal ..."
+  gsettings set org.pantheon.terminal.settings allow-bold false
+  gsettings set org.pantheon.terminal.settings follow-last-table false
+  gsettings set org.pantheon.terminal.settings opacity 95
+  gsettings set org.pantheon.terminal.settings palette '#000000:#e52222:#a6e32d:#fc951e:#c48dff:#fa2573:#67d9f0:#f2f2f2:#000000:#e52222:#a6e32d:#fc951e:#c48dff:#fa2573:#67d9f0:#f2f2f'
+  gsettings set org.pantheon.terminal.settings remember-tabs false
+  gsettings set org.pantheon.terminal.settings shell '/usr/bin/zsh'
+
+fancy_echo "Enabling Elementary Update PPA ..."
+  sudo add-apt-repository -y ppa:versable/elementary-update
+  sudo aptitude update
+
+fancy_echo "Installing Elementary Tweaks ..."
+  sudo aptitude install elementary-tweaks
+
+fancy_echo "Installing Sypapse indicator ..."
+  sudo aptitude install indicator-synapse
+### end linux-components/elementary-os
+
+fancy_echo "Enabling Canonical partners repository ..."
+  sudo add-apt-repository "deb http://archive.canonical.com/ubuntu precise partner"
+  sudo aptitude update
+
+fancy_echo "Installing Brasero, for CD/DVD burning ..."
+  sudo aptitude install -y brasero
+
+fancy_echo "Installing Chromium web browser ..."
+  sudo aptitude install -y chromium-browser
+
+fancy_echo "Installing dconf-editor, for system configuration ..."
+  sudo aptitude install -y dconf-editor
+
+fancy_echo "Installing Easytag, for viewing, editing and writing ID3 tags ..."
+  sudo aptitude install -y easytag
+
+fancy_echo "Installing Firefox web browser ..."
+  sudo aptitude install -y firefox
+
+fancy_echo "Installing Gimp Image Editor ..."
+  sudo aptitude install -y gimp
+
+fancy_echo "Installing Redshift, to adjust the screen color temperature ..."
+  sudo aptitude install -y gtk-redshift
+
+fancy_echo "Installing Libreoffice ..."
+  sudo aptitude install -y libreoffice
+
+fancy_echo "Installing Picard, the MusicBrainz audio files tagger ..."
+  sudo aptitude install -y picard
+
+fancy_echo "Installing Transmission BitTorrent client ..."
+  sudo aptitude install -y transmission
+
+fancy_echo "Installing Clementine music player..."
+  sudo aptitude install -y clementine
+
+fancy_echo "Installing Subdownloader subtitles downloader ..."
+  sudo aptitude install -y subdownloader
+
+fancy_echo "Installing Comix comic viewer ..."
+  sudo aptitude install -y comix
+
+fancy_echo "Installing ComicTagger comic metadata editor ..."
+  sudo pip install comictagger beautifulsoup4 configparser
+
+fancy_echo "Installing cbr2cbz, to convert comics format from CBR to CBZ ..."
+  gem install cbr2cbz --no-document
+
+fancy_echo "Installing Skype ..."
+  sudo aptitude install -y skype
+
+fancy_echo "Installing Dropbox ..."
+  sudo aptitude install -y dropbox
+### end linux-components/debian-derivative-apps
+
