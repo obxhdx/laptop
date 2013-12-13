@@ -16,3 +16,4 @@ common-components/prezto
 common-components/vim
 linux-components/elementary-os
 linux-components/debian-derivative-apps
+linux-components/virtualbox

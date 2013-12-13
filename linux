@@ -275,3 +275,10 @@ fancy_echo "Installing Dropbox ..."
   sudo aptitude install -y dropbox
 ### end linux-components/debian-derivative-apps
 
+fancy_echo "Installing Virtualbox ..."
+  sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian precise non-free contrib" >> /etc/apt/sources.list.d/virtualbox.org.list' 
+  wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc | sudo apt-key add -
+  sudo aptitude update
+  sudo aptitude install -y virtualbox-4.3
+### end linux-components/virtualbox
+
