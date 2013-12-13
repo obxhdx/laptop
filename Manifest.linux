@@ -14,4 +14,4 @@ linux-components/fasd
 common-components/prezto
 common-components/vim
 linux-components/elementary-os
-linux-components/debian-package-apps
+linux-components/debian-derivative-apps

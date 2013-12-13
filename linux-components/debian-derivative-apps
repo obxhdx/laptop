@@ -44,6 +44,9 @@ fancy_echo "Installing Comix comic viewer ..."
 fancy_echo "Installing ComicTagger comic metadata editor ..."
   sudo pip install comictagger beautifulsoup4 configparser
 
+fancy_echo "Installing cbr2cbz, to convert comics format from CBR to CBZ ..."
+  gem install cbr2cbz --no-document
+
 fancy_echo "Installing Skype ..."
   sudo aptitude install -y skype
 
