@@ -1,5 +1,5 @@
-#!/usr/bin/env zsh
-### end common-components/zsh-shebang
+#!/bin/sh
+### end common-components/sh-shebang
 
 # Welcome to the thoughtbot laptop script! Be prepared to turn your laptop (or
 # desktop, no haters here) into an awesome development machine.
@@ -34,6 +34,22 @@ fancy_echo "Updating system packages ..."
   fi
   sudo aptitude update
 ### end linux-components/debian-package-update
+
+fancy_echo "Installing curl ..."
+  sudo aptitude install -y curl
+
+fancy_echo "Installing zsh ..."
+  sudo aptitude install -y zsh
+
+fancy_echo "Changing your shell to zsh ..."
+  chsh -s `which zsh`
+
+fancy_echo "Your shell will now restart to apply changes."
+  exec `which zsh` -l
+
+fancy_echo "Installing pip, a tool for installing and managing Python package ..."
+  sudo aptitude install -y python-pip
+### end linux-components/debian-prerequisites
 
 fancy_echo "Installing git, for source control management ..."
   sudo aptitude install -y git

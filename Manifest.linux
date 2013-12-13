@@ -1,9 +1,10 @@
-common-components/zsh-shebang
+common-components/sh-shebang
 common-components/header
 common-components/exit-trap
 common-components/shared-functions
 linux-components/distro-check
 linux-components/debian-package-update
+linux-components/debian-prerequisites
 linux-components/debian-derivative-packages
 linux-components/silver-searcher-from-source
 linux-components/rbenv
