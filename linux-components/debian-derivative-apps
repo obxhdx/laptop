@@ -3,43 +3,43 @@ fancy_echo "Enabling Canonical partners repository ..."
   sudo aptitude update
 
 fancy_echo "Installing Brasero, for CD/DVD burning ..."
-  sudo aptitude install -y brasero
+  install brasero
 
 fancy_echo "Installing Chromium web browser ..."
-  sudo aptitude install -y chromium-browser
+  install chromium-browser
 
 fancy_echo "Installing dconf-editor, for system configuration ..."
-  sudo aptitude install -y dconf-editor
+  install dconf-editor
 
 fancy_echo "Installing Easytag, for viewing, editing and writing ID3 tags ..."
-  sudo aptitude install -y easytag
+  install easytag
 
 fancy_echo "Installing Firefox web browser ..."
-  sudo aptitude install -y firefox
+  install firefox
 
 fancy_echo "Installing Gimp Image Editor ..."
-  sudo aptitude install -y gimp
+  install gimp
 
 fancy_echo "Installing Redshift, to adjust the screen color temperature ..."
-  sudo aptitude install -y gtk-redshift
+  install gtk-redshift
 
 fancy_echo "Installing Libreoffice ..."
-  sudo aptitude install -y libreoffice
+  install libreoffice
 
 fancy_echo "Installing Picard, the MusicBrainz audio files tagger ..."
-  sudo aptitude install -y picard
+  install picard
 
 fancy_echo "Installing Transmission BitTorrent client ..."
-  sudo aptitude install -y transmission
+  install transmission
 
 fancy_echo "Installing Clementine music player..."
-  sudo aptitude install -y clementine
+  install clementine
 
 fancy_echo "Installing Subdownloader subtitles downloader ..."
-  sudo aptitude install -y subdownloader
+  install subdownloader
 
 fancy_echo "Installing Comix comic viewer ..."
-  sudo aptitude install -y comix
+  install comix
 
 fancy_echo "Installing ComicTagger comic metadata editor ..."
   sudo pip install comictagger beautifulsoup4 configparser
@@ -48,10 +48,10 @@ fancy_echo "Installing cbr2cbz, to convert comics format from CBR to CBZ ..."
   gem install cbr2cbz --no-document
 
 fancy_echo "Installing youtube-dl, to download Youtube videos ..."
-  sudo aptitude install -y youtube-dl
+  install youtube-dl
 
 fancy_echo "Installing Skype ..."
-  sudo aptitude install -y skype
+  install skype
 
 fancy_echo "Installing Dropbox ..."
-  sudo aptitude install -y dropbox
+  install dropbox

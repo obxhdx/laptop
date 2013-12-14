@@ -13,8 +13,18 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 ### end common-components/exit-trap
 
+LOG_FILE="/tmp/laptop-$(hostname)-install.log"
+
 fancy_echo() {
-  printf "\n%b\n" "$1"
+  printf "\033[34m::\033[37m %b\n" "$1"
+}
+
+install() {
+  sudo aptitude install -y "$1" >> $LOG_FILE
+}
+
+update_repos() {
+  sudo aptitude update >> $LOG_FILE
 }
 ### end common-components/shared-functions
 
@@ -30,52 +40,49 @@ fancy_echo "Updating system packages ..."
     fancy_echo "Using aptitude ..."
   else
     fancy_echo "Installing aptitude ..."
-    sudo apt-get install -y aptitude
+    install aptitude
   fi
-  sudo aptitude update
+  update_repos
 ### end linux-components/debian-package-update
 
 fancy_echo "Installing curl ..."
-  sudo aptitude install -y curl
+  install curl
 
 fancy_echo "Installing zsh ..."
-  sudo aptitude install -y zsh
-
-fancy_echo "Changing your shell to zsh ..."
-  chsh -s $(which zsh)
+  install zsh
 
 fancy_echo "Installing pip, a tool for installing and managing Python package ..."
-  sudo aptitude install -y python-pip
+  install python-pip
 ### end linux-components/debian-prerequisites
 
 fancy_echo "Installing git, for source control management ..."
-  sudo aptitude install -y git
+  install git
 
 fancy_echo "Installing base ruby build dependencies ..."
   sudo aptitude build-dep -y ruby1.9.3
 
 fancy_echo "Installing libraries for common gem dependencies ..."
-  sudo aptitude install -y libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
+  install libxslt1-dev libcurl4-openssl-dev libksba8 libksba-dev libqtwebkit-dev libreadline-dev
 
 fancy_echo "Installing ctags, to index files for vim tab completion of methods, classes, variables ..."
-  sudo aptitude install -y exuberant-ctags
+  install exuberant-ctags
 
 fancy_echo "Installing vim ..."
-  sudo aptitude install -y vim-gtk
+  install vim-gtk
 
 fancy_echo "Installing icedtea-7-plugin, to execute Java applets ..."
-  sudo aptitude install -y icedtea-7-plugin
+  install icedtea-7-plugin
 
 fancy_echo "Installing unrar-free, the .rar files unarchiver ..."
-  sudo aptitude install -y unrar-free
+  install unrar-free
 
 fancy_echo "Installing flashplugin-installer, the Adobe Flash Player plugin installer ..."
-  sudo aptitude install -y flashplugin-installer
+  install flashplugin-installer
 ### end linux-components/debian-derivative-packages
 
 fancy_echo "Installing The Silver Searcher (better than ack or grep) to search the contents of files ..."
   git clone git://github.com/ggreer/the_silver_searcher.git /tmp/the_silver_searcher
-  sudo aptitude install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+  install automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
   sh /tmp/the_silver_searcher/build.sh
   cd /tmp/the_silver_searcher
   sh build.sh
@@ -185,7 +192,7 @@ fancy_echo "Adding Redshift to startup applications ..."
   cp /usr/share/applications/gtk-redshift.desktop ~/.config/autostart
 
 fancy_echo "Configuring NTFS backup partition to auto-mount ..."
-  sudo aptitude install -y ntfs-3g
+  install ntfs-3g
   uuid=`sudo blkid /dev/sda8 | awk -F'"' '{print $4}'`
   echo "# NTFS auto-mount\nUUID=$uuid /media/Backup ntfs-3g auto,defaults,uid=1000 0 0" | sudo tee -a /etc/fstab
 
@@ -194,7 +201,7 @@ fancy_echo "Turning off bluetooth ..."
   sudo sed -i 's/RememberPowered = \w\+/RememberPowered = false/g' /etc/bluetooth/main.conf
 
 fancy_echo "Setting Ubuntu Mono as monospace font ..."
-  sudo aptitude install ttf-ubuntu-font-family
+  install ttf-ubuntu-font-family
   gsettings set org.gnome.desktop.interface monospace-font-name 'Ubuntu Mono 11'
 
 fancy_echo "Tweaking terminal ..."
@@ -210,10 +217,10 @@ fancy_echo "Enabling Elementary Update PPA ..."
   sudo aptitude update
 
 fancy_echo "Installing Elementary Tweaks ..."
-  sudo aptitude install elementary-tweaks
+  install elementary-tweaks
 
 fancy_echo "Installing Sypapse indicator ..."
-  sudo aptitude install indicator-synapse
+  install indicator-synapse
 ### end linux-components/elementary-os
 
 fancy_echo "Enabling Canonical partners repository ..."
@@ -221,43 +228,43 @@ fancy_echo "Enabling Canonical partners repository ..."
   sudo aptitude update
 
 fancy_echo "Installing Brasero, for CD/DVD burning ..."
-  sudo aptitude install -y brasero
+  install brasero
 
 fancy_echo "Installing Chromium web browser ..."
-  sudo aptitude install -y chromium-browser
+  install chromium-browser
 
 fancy_echo "Installing dconf-editor, for system configuration ..."
-  sudo aptitude install -y dconf-editor
+  install dconf-editor
 
 fancy_echo "Installing Easytag, for viewing, editing and writing ID3 tags ..."
-  sudo aptitude install -y easytag
+  install easytag
 
 fancy_echo "Installing Firefox web browser ..."
-  sudo aptitude install -y firefox
+  install firefox
 
 fancy_echo "Installing Gimp Image Editor ..."
-  sudo aptitude install -y gimp
+  install gimp
 
 fancy_echo "Installing Redshift, to adjust the screen color temperature ..."
-  sudo aptitude install -y gtk-redshift
+  install gtk-redshift
 
 fancy_echo "Installing Libreoffice ..."
-  sudo aptitude install -y libreoffice
+  install libreoffice
 
 fancy_echo "Installing Picard, the MusicBrainz audio files tagger ..."
-  sudo aptitude install -y picard
+  install picard
 
 fancy_echo "Installing Transmission BitTorrent client ..."
-  sudo aptitude install -y transmission
+  install transmission
 
 fancy_echo "Installing Clementine music player..."
-  sudo aptitude install -y clementine
+  install clementine
 
 fancy_echo "Installing Subdownloader subtitles downloader ..."
-  sudo aptitude install -y subdownloader
+  install subdownloader
 
 fancy_echo "Installing Comix comic viewer ..."
-  sudo aptitude install -y comix
+  install comix
 
 fancy_echo "Installing ComicTagger comic metadata editor ..."
   sudo pip install comictagger beautifulsoup4 configparser
@@ -266,19 +273,19 @@ fancy_echo "Installing cbr2cbz, to convert comics format from CBR to CBZ ..."
   gem install cbr2cbz --no-document
 
 fancy_echo "Installing youtube-dl, to download Youtube videos ..."
-  sudo aptitude install -y youtube-dl
+  install youtube-dl
 
 fancy_echo "Installing Skype ..."
-  sudo aptitude install -y skype
+  install skype
 
 fancy_echo "Installing Dropbox ..."
-  sudo aptitude install -y dropbox
+  install dropbox
 ### end linux-components/debian-derivative-apps
 
 fancy_echo "Installing Virtualbox ..."
   sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian precise non-free contrib" >> /etc/apt/sources.list.d/virtualbox.org.list' 
   wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc | sudo apt-key add -
   sudo aptitude update
-  sudo aptitude install -y virtualbox-4.3
+  install virtualbox-4.3
 ### end linux-components/virtualbox
 

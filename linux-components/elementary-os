@@ -30,7 +30,7 @@ fancy_echo "Adding Redshift to startup applications ..."
   cp /usr/share/applications/gtk-redshift.desktop ~/.config/autostart
 
 fancy_echo "Configuring NTFS backup partition to auto-mount ..."
-  sudo aptitude install -y ntfs-3g
+  install ntfs-3g
   uuid=`sudo blkid /dev/sda8 | awk -F'"' '{print $4}'`
   echo "# NTFS auto-mount\nUUID=$uuid /media/Backup ntfs-3g auto,defaults,uid=1000 0 0" | sudo tee -a /etc/fstab
 
@@ -39,7 +39,7 @@ fancy_echo "Turning off bluetooth ..."
   sudo sed -i 's/RememberPowered = \w\+/RememberPowered = false/g' /etc/bluetooth/main.conf
 
 fancy_echo "Setting Ubuntu Mono as monospace font ..."
-  sudo aptitude install ttf-ubuntu-font-family
+  install ttf-ubuntu-font-family
   gsettings set org.gnome.desktop.interface monospace-font-name 'Ubuntu Mono 11'
 
 fancy_echo "Tweaking terminal ..."
@@ -55,7 +55,7 @@ fancy_echo "Enabling Elementary Update PPA ..."
   sudo aptitude update
 
 fancy_echo "Installing Elementary Tweaks ..."
-  sudo aptitude install elementary-tweaks
+  install elementary-tweaks
 
 fancy_echo "Installing Sypapse indicator ..."
-  sudo aptitude install indicator-synapse
+  install indicator-synapse

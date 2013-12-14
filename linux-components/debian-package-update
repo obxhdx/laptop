@@ -3,6 +3,6 @@ fancy_echo "Updating system packages ..."
     fancy_echo "Using aptitude ..."
   else
     fancy_echo "Installing aptitude ..."
-    sudo apt-get install -y aptitude
+    install aptitude
   fi
-  sudo aptitude update
+  update_repos

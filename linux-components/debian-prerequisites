@@ -1,9 +1,8 @@
 fancy_echo "Installing curl ..."
-  sudo aptitude install -y curl
+  install curl
 
 fancy_echo "Installing zsh ..."
-  sudo aptitude install -y zsh
-
+  install zsh
 
 fancy_echo "Installing pip, a tool for installing and managing Python package ..."
-  sudo aptitude install -y python-pip
+  install python-pip

@@ -13,8 +13,18 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 set -e
 ### end common-components/exit-trap
 
+LOG_FILE="/tmp/laptop-$(hostname)-install.log"
+
 fancy_echo() {
-  printf "\n%b\n" "$1"
+  printf "\033[34m::\033[37m %b\n" "$1"
+}
+
+install() {
+  sudo aptitude install -y "$1" >> $LOG_FILE
+}
+
+update_repos() {
+  sudo aptitude update >> $LOG_FILE
 }
 ### end common-components/shared-functions
 
