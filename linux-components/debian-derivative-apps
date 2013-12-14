@@ -47,6 +47,9 @@ fancy_echo "Installing ComicTagger comic metadata editor ..."
 fancy_echo "Installing cbr2cbz, to convert comics format from CBR to CBZ ..."
   gem install cbr2cbz --no-document
 
+fancy_echo "Installing youtube-dl, to download Youtube videos ..."
+  sudo aptitude install -y youtube-dl
+
 fancy_echo "Installing Skype ..."
   sudo aptitude install -y skype
 
